@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load static %} <!-- Load static files -->
+
+{% block head %}
+    <link href="{% static 'home/css/login.css' %}" rel="stylesheet"> 
+{% endblock %}
+
+
+{% block content %}
+    <div class="login_header">
+        <h1>Login</h1>
+    </div>
+    <div class="login-container">
+        <form action="/login/" method="post">
+            <div class="input-container">
+                <input type="text" id="username" name="username" placeholder=" " required {% if error %}style="border-color: #b20000;"{% endif %}>
+                <label for="username">Username</label>
+            
+            </div>
+            <div class="input-container">
+                <input type="password" id="password" name="password" placeholder=" " required {% if error %}style="border-color: #b20000;"{% endif %}>
+                <label for="password">Password</label>
+            </div>
+            {% if error %}
+            
+                <div class="error-msg {{ message.tags }}">
+                    * {{ error }}
+                </div>
+                <br>
+            {% endif %}
+            {% csrf_token %}
+            <input type="submit" value="Login">
+        </form>
+        <div class="register-link">
+            <p>Don't have an account? <a href="/register/">Create One!</a></p>
+        </div>
+    </div>
+    
+
+{% endblock %}

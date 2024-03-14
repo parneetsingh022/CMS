@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .draggable{
+        padding-bottom: 50px;
+    }
+    .draggable .dragger {
+        width: 50%;
+        height: 50px;
+        border: 1px solid var(--border);
+        cursor: move;
+        background-color: var(--background-top);
+        color:var(--text);
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .draggable .dragger::before {
+        content: '⠿';
+        margin-right: 10px;
+    }
+
+    .dragger-selected {
+    border-color: blue !important;
+}
+</style>
+<h1>Welcome to CMS</h1>
+
+
+
+<div class="draggable">
+    <div class="elem1">
+        <div class="dragger">
+            <p>Element 1</p>
+        </div>
+        
+    </div>
+    <div class="elem2">
+        <div class="dragger">
+            <p>Element 2</p>
+        </div>
+        
+    </div>
+    <div class="elem3">
+        <div class="dragger">
+            <p>Element 3</p>
+        </div>
+        
+    </div>
+    <div class="elem4">
+        <div class="dragger">
+            <p>Element 4</p>
+        </div>
+        
+    </div>
+</div><br>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $( function() {
+        $( ".draggable" ).sortable({
+            axis: 'y',
+            handle: '.dragger',
+            containment: "parent", // This line restricts the dragging to the parent div
+            update: function(event, ui) {
+                var sortedTexts = $(this).children().map(function() {
+                    return $(this).text().trim();
+                }).get();
+                console.log(sortedTexts);
+            }
+        });
+        $( ".draggable" ).disableSelection();
+    } );
+
+    $(".draggable .dragger").click(function() {
+    $(".draggable .dragger").removeClass("dragger-selected"); // Remove the class from all draggers
+    $(this).addClass("dragger-selected"); // Add the class to the clicked dragger
+});
+    </script>
+
+{% endblock %}
