@@ -11,7 +11,7 @@ from django.middleware.csrf import get_token
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def get_data(request):
     print(request.user)
     data = json.loads(request.body)
