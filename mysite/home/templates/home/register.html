@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% load static %} <!-- Load static files -->
+
+{% block head %}
+    <link href="{% static 'home/css/login.css' %}" rel="stylesheet"> 
+{% endblock %}
+
+{% block content %}
+    <div class="login_header">
+        <h1>Register</h1>
+    </div>
+    <div class="login-container">
+        <form action="/register/" method="post">
+            <div class="group">
+                <div class="input-container">
+                    <input type="text" id="first_name" name="first_name" placeholder=" " required>
+                    <label for="first_name">First Name</label>
+                </div>
+                <div class="input-container">
+                    <input type="text" id="last_name" name="last_name" placeholder=" " required>
+                    <label for="last_name">Last Name</label>
+                </div>
+            </div>
+            <span id="nameError"></span>
+            
+            <div class="input-container">
+                <input type="text" id="username" name="username" placeholder=" " required>
+                <label for="username">Username</label>
+                
+                
+            </div>
+            <span id="usernameError"></span>
+            
+            <div class="input-container">
+                <input type="email" id="email" name="email" placeholder=" " required>
+                <label for="email">Email</label>
+            </div>
+            <div class="input-container">
+                <input type="password" id="password" name="password" placeholder=" " required>
+                <label for="password">Password</label>
+            </div>
+            {% csrf_token %}
+            <input type="submit" value="Register">
+        </form>
+        <div class="register-link">
+            <p>Already have an account? <a href="/login/">Login</a></p>
+        </div>
+    </div>
+    <script>
+    document.getElementById('username').addEventListener('input', function (e) {
+        var username = e.target.value;
+        var registerButton = document.querySelector('input[type="submit"]');
+        var usernameInput = document.getElementById('username');
+        var usernameError = document.getElementById('usernameError');
+
+        // Check if username is alphanumeric
+        if (/^[a-z0-9\.]*$/i.test(username)) {
+            // Enable the register button and remove the red border and error message if username is alphanumeric
+            registerButton.disabled = false;
+            registerButton.style.backgroundColor = "var(--green)";
+            registerButton.style.cursor = 'pointer';
+            usernameInput.style.borderColor = '';
+            usernameError.textContent = '';
+            //style="margin-left:15px;margin-top:-20px;font-size:14px;color:red"
+            usernameError.display = 'none';
+            usernameError.style.marginLeft = "auto";
+            usernameError.style.marginTop = "auto";
+        } else {
+            // Disable the register button and add a red border and error message if username is not alphanumeric
+            registerButton.disabled = true;
+            registerButton.style.backgroundColor = 'var(--background)';
+            registerButton.style.cursor = 'not-allowed';
+            usernameInput.style.borderColor = 'red';
+            usernameError.display = 'block';
+            usernameError.innerHTML = 'Username must be alphanumeric.<br><br>';
+            usernameError.style.marginLeft = "15px";
+            usernameError.style.marginTop = "-20px";
+            usernameError.style.fontSize = "14px";
+            usernameError.style.color = "red";
+        }
+    });
+
+
+    var nameFields = ['first_name', 'last_name'];
+    var registerButton = document.querySelector('input[type="submit"]');
+    var nameError = document.getElementById('nameError');
+
+    function checkNames() {
+        var allNamesValid = true;
+
+        nameFields.forEach(function(fieldId) {
+            var name = document.getElementById(fieldId).value;
+
+            // Check if name is alphanumeric
+            if (!/^[a-z0-9]*$/i.test(name)) {
+                allNamesValid = false;
+            }
+        });
+
+        if (allNamesValid) {
+            // Enable the register button and remove the red border and error message if all names are alphanumeric
+            registerButton.disabled = false;
+            registerButton.style.backgroundColor = "var(--green)";
+            registerButton.style.cursor = 'pointer';
+            nameFields.forEach(function(fieldId) {
+                document.getElementById(fieldId).style.borderColor = '';
+            });
+            nameError.textContent = '';
+            nameError.style.display = 'none';
+            nameError.style.marginLeft = "auto";
+            nameError.style.marginTop = "auto";
+        } else {
+            // Disable the register button and add a red border and error message if any name is not alphanumeric
+            registerButton.disabled = true;
+            registerButton.style.backgroundColor = 'var(--background)';
+            registerButton.style.cursor = 'not-allowed';
+            nameFields.forEach(function(fieldId) {
+                document.getElementById(fieldId).style.borderColor = 'red';
+            });
+            nameError.innerHTML = 'Both names must be alphanumeric.<br><br>';
+            nameError.style.display = 'block';
+            nameError.style.marginLeft = "15px";
+            nameError.style.marginTop = "-20px";
+            nameError.style.fontSize = "14px";
+            nameError.style.color = "red";
+        }
+    }
+
+    nameFields.forEach(function(fieldId) {
+        document.getElementById(fieldId).addEventListener('input', checkNames);
+    });
+</script>
+{% endblock %}

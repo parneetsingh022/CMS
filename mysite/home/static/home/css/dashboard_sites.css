@@ -1,0 +1,128 @@
+.dashboard_body{
+    display:grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.sites_container{
+    padding:10px;
+}
+
+.site-icon{
+    font-size:20px;
+    color:var(--border);
+}
+
+.sites_container .site{
+    padding:5px 10px;
+    cursor:pointer;
+    display:flex;
+    align-items: center;
+    position:relative;
+    border-radius:10px;
+    margin-top:5px;
+    
+}
+.sites_container .site .site_name{
+    margin-left:20px;
+}
+
+.sites_container .site.active{
+    
+    background-color:var(--background-top);
+   
+}
+
+
+.sites_container .site.active::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    width: 5px;
+    background-color: green;
+    height:30px;
+    border-radius:20px;
+}
+
+.sites_container .site:hover{
+    background-color:var(--background-top);
+}
+
+.sites_container .site.add_site{
+    display:flex;
+    justify-content: center;
+    border:solid 1px var(--border);
+    margin-top:10px;
+}
+
+.sites_container .site.add_site:hover{
+    background-color:var(--green);
+}
+.sites_setting{
+    margin-left:100px;
+
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+.add_input {
+    background-color: var(--background-top);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    position: relative;
+    display: none;
+    animation: scaleUp 0.5s ease-in-out; /* Change this line */
+}
+
+.add_input form{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+}
+
+.add_input::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(-5px - 15px);
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent var(--background-top) transparent;
+}
+
+.add_input input{
+    width:90%;
+    font-size:16px;
+    padding:10px;
+    border:solid 1px var(--border);
+    background-color:var(--background);
+    color:var(--text);
+    border-radius:10px;
+}
+
+.add_input input:focus{
+    outline:none;
+}
+
+.add_input button{
+    margin-top:10px;
+    padding:10px 20px;
+    border-radius:10px;
+    background-color:var(--green);
+    color:var(--text);
+    border:none;
+    cursor:pointer;
+    width:97%;
+}
+
+.alert{
+    border:solid 1px red;
+    padding:10px;
+    font-size:14px;
+    border-radius:10px;
+    background-color: rgba(255, 0, 0, 0.081);
+}

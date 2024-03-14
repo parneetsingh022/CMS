@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% load static %} <!-- Load static files -->
+{% block head %}
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="{% static 'home/css/dashboard.css' %}" rel="stylesheet"> 
+    <link href="{% static 'home/css/dashboard_sites.css' %}" rel="stylesheet"> 
+{% endblock %}
+
+{% block content %}
+<div class="dashboard_container">
+    <div class="dashboard_header">
+        <div class="title">
+            <h2>Dashboard</h2>
+        </div>
+    </div>
+    <div class="dashboard_body">
+        <div class="sites_container">
+            <div class="site active">
+                <span class="material-symbols-outlined site-icon">
+                    description
+                </span>
+                <span class="site_name">Site 1</span>
+            </div>
+            <div class="site">
+                <span class="material-symbols-outlined site-icon">
+                    description
+                </span>
+                <span class="site_name">Site 2</span>
+            </div>
+            <div class="site">
+                <span class="material-symbols-outlined site-icon">
+                    description
+                </span>
+                <span class="site_name">Site 3</span>
+            </div>
+            <div class="site">
+                <span class="material-symbols-outlined site-icon">
+                    description
+                </span>
+                <span class="site_name">Site 4</span>
+            </div>
+            <div class="site add_site">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+            </div>
+            <div class="add_input">
+                <!--<div class="alert">
+                    <span><a href="#" style="color:rgb(55, 113, 228);text-decoration:none;">Upgrade</a> your plan to create more.</span>
+                </div>-->
+                <form action="">
+                    <input type="text" placeholder="Site Name" maxlength="15">
+                    <button>Create</button>
+                </form>
+            </div>
+        </div>
+        <div class="sites_setting">
+            <h1>Site Setting</h1>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+    
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var addSite = document.querySelector('.add_site');
+    var addInput = document.querySelector('.add_input');
+    var symbol = addSite.querySelector('.material-symbols-outlined');
+
+    addSite.addEventListener('click', function() {
+        // Toggle visibility of .add_input
+        if (addInput.style.display === 'none' || addInput.style.display === '') {
+            addInput.style.display = 'block';
+            symbol.textContent = 'close'; // Change symbol to 'close'
+        } else {
+            addInput.style.display = 'none';
+            symbol.textContent = 'add'; // Change symbol back to 'add'
+        }
+        });
+    });
+
+    const csrfToken = getCookie('csrfToken');
+    fetch('http://localhost:8000/api/sites/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+    },
+    credentials: 'include', // Ensure cookies are included with the request
+    body: JSON.stringify({
+        username: "{{ user.username }}"
+    }),
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+</script>
+{% endblock %}
