@@ -10,7 +10,7 @@ from rest_framework.decorators import authentication_classes
 from django.middleware.csrf import get_token
 
 @api_view(['POST'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 def get_data(request):
     print(request.user)
